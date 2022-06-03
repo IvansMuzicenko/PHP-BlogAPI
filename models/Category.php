@@ -46,4 +46,25 @@
 
             return $stmt;
         }
+
+        public function create() {
+            $query = 'INSERT INTO ' 
+                . $this->table . '
+            SET
+                name = :name';
+
+            $stmt = $this->conn->prepare($query);
+
+            $this->name = htmlspecialchars(strip_tags($this->name));
+
+            $stmt->bindParam(':name', $this->name);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            printf("Error: $stmt->error.\n");
+
+            return false;
+        }
     }
