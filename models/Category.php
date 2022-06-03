@@ -26,4 +26,24 @@
 
             return $stmt;
         }
+
+        public function read_single() {
+            $query = 'SELECT
+                id,
+                name,
+                created_at
+            FROM
+                ' . $this->table . '
+            WHERE
+                id = :id
+            LIMIT 0,1';
+
+            $stmt = $this->conn->prepare($query);
+
+            $stmt->bindParam(":id", $this->id);
+
+            $stmt->execute();
+
+            return $stmt;
+        }
     }
